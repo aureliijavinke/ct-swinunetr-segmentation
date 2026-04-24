@@ -82,6 +82,24 @@ CT image slice
 ground truth segmentation
 predicted segmentation
 binary label comparison
+
+## Notes on Results
+
+The model uses a pretrained SwinUNETR backbone without fine-tuning on the provided spinal CT dataset.
+
+As a result:
+
+- Predictions are noisy and not anatomically accurate
+- The segmentation head is not adapted to this dataset
+- Performance is limited without training
+
+This project demonstrates:
+- correct data loading
+- MONAI pipeline usage
+- SwinUNETR inference workflow
+- 3D medical image handling
+
+Fine-tuning would significantly improve results.
 nearby slice comparison
 
 Example output figures should be saved in the results/ folder.
