@@ -1,108 +1,70 @@
-
 # 3D CT Segmentation using SwinUNETR
 
-This project demonstrates 3D medical image segmentation using a SwinUNETR model in MONAI.
+## Overview
 
-The task uses CT volumes and corresponding segmentation labels. Inference is performed in Google Colab using PyTorch and a T4 GPU. A pretrained SwinUNETR backbone is loaded from the MONAI model zoo, while the final segmentation head is adapted because the number of target classes differs from the pretrained BTCV model.
+This repository demonstrates a 3D medical image segmentation inference workflow using SwinUNETR, MONAI and PyTorch.
 
 ## Project goal
 
-The goal of this project is to:
-
-- load 3D CT `.nii` / `.nii.gz` volumes
-- load corresponding segmentation masks
-- prepare MONAI dictionary-based transforms
-- use SwinUNETR for 3D segmentation inference
-- visualize image, ground truth and predicted segmentation slices
-- run inference without training, as required by the task
+The goal of this project is to load 3D CT volumes, apply MONAI preprocessing transforms, run SwinUNETR inference and visualize segmentation outputs.
 
 ## Technologies used
 
-- Python
-- PyTorch
-- MONAI
-- SwinUNETR
-- NiBabel
-- Matplotlib
-- Google Colab
-- T4 GPU
+* Python
+* PyTorch
+* MONAI
+* SwinUNETR
+* NiBabel
+* NumPy
+* Matplotlib
+* Google Colab
 
-## Dataset structure
+## Dataset
 
-The dataset should be stored in Google Drive as:
+The project uses CT volumes and segmentation masks in NIfTI format (`.nii` / `.nii.gz`).
 
-```text
-dataset (2)/
-└── images/
-    ├── volumes/
-    │   ├── image_1.nii.gz
-    │   ├── image_2.nii.gz
-    │   └── ...
-    └── segmentations/
-        ├── label_1.nii.gz
-        ├── label_2.nii.gz
-        └── ...
+The dataset is not included in this repository.
 
-Model
-The model used is:
-SwinUNETR(
-    in_channels=1,
-    out_channels=26,
-    feature_size=48,
-    use_checkpoint=True
-)
+## Model
 
-The output has 26 classes:
+The model is based on SwinUNETR with 1 input channel and 26 output classes.
 
-background
-25 vertebrae labels
+A pretrained MONAI BTCV checkpoint is used as the backbone.
 
-A pretrained MONAI SwinUNETR BTCV checkpoint is loaded. The old output segmentation head is removed before loading weights because the number of output classes is different.
+The model is not fine-tuned on the spinal CT dataset, so predictions are used only for workflow demonstration.
 
-Important note
-Training is skipped. The model performs inference using a pretrained backbone only.
+## How to run
 
-Prediction quality is expected to be limited because the model is not fine-tuned on this specific spinal CT dataset.
-
-How to run
 Install dependencies:
+
+```bash
 pip install -r requirements.txt
+```
 
-Run in Google Colab:
+Run inference:
+
+```bash
 python src/swinunetr_inference.py
+```
 
-Or open the notebook version in:
-notebooks/swinunetr_inference_colab.ipynb
+Before running, update the dataset path in the script if needed.
 
-Results
+## Results
 
-The script visualizes:
+The script generates example visualizations in the `results/` folder, including CT slices, ground truth masks and predicted segmentation outputs.
 
-CT image slice
-ground truth segmentation
-predicted segmentation
-binary label comparison
+## Limitations
 
-## Notes on Results
+This is an inference-focused demonstration, not a clinically validated segmentation model.
 
-The model uses a pretrained SwinUNETR backbone without fine-tuning on the provided spinal CT dataset.
+The prediction quality is limited because the model is not fine-tuned on the dataset used in this project.
 
-As a result:
+## What this project demonstrates
 
-- Predictions are noisy and not anatomically accurate
-- The segmentation head is not adapted to this dataset
-- Performance is limited without training
+This project demonstrates experience with 3D medical image data, MONAI transforms, pretrained model loading, SwinUNETR inference and segmentation result visualization.
 
-This project demonstrates:
-- correct data loading
-- MONAI pipeline usage
-- SwinUNETR inference workflow
-- 3D medical image handling
+## Author
 
-Fine-tuning would significantly improve results.
-nearby slice comparison
+Aurēlija Viņķe
 
-Example output figures should be saved in the results/ folder.
 
-Author
-Aurēlija
