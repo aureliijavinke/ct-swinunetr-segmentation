@@ -10,4 +10,4 @@ Expected output files:
 
 The model uses a pretrained SwinUNETR backbone and performs inference without additional training.
 
-Prediction quality is limited because the model is not fine-tuned on the provided spinal CT dataset.
+Prediction quality is limited because the model is not fine-tuned on the provided spinal CT dataset. These figures demonstrate the inference and visualization workflow, not clinically valid segmentation performance.
